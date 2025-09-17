@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mini JavaScript Project</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+      padding: 20px;
+      color: #333;
+    }
+    .card {
+      background: #fff;
+      padding: 20px;
+      margin: 20px auto;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      width: 400px;
+      text-align: center;
+    }
+    h2 {
+      margin-bottom: 15px;
+      color: #444;
+    }
+    input, button {
+      padding: 10px;
+      margin: 5px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+    }
+    input {
+      width: 70%;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #6c63ff;
+      color: #fff;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #4b47cc;
+    }
+    #colorBox {
+      margin: 20px auto;
+      width: 150px;
+      height: 150px;
+      background: #f0f0f0;
+      border-radius: 12px;
+      transition: all 0.8s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    ul {
+      text-align: left;
+    }
+    li {
+      margin: 5px 0;
+      background: #f9f9f9;
+      padding: 8px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    li button {
+      background: crimson;
+      padding: 5px 8px;
+      border-radius: 6px;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Guess the number game -->
+  <div class="card">
+    <h2>🎯 Guess the Number (1–10)</h2>
+    <input id="guessInput" type="number" placeholder="Enter number 1-10">
+    <button onclick="checkGuess()">Check</button>
+    <p id="resultText">Start guessing...</p>
+    <p id="scoreText">Score: 10</p>
+  </div>
+
+  <!-- Color changing box -->
+  <div class="card">
+    <h2>🎨 Color Changing Box</h2>
+    <div id="colorBox"></div>
+    <button onclick="changeColor()">Change Color</button>
+  </div>
+
+  <!-- Live message -->
+  <div class="card">
+    <h2>💬 Live Message</h2>
+    <input id="messageInput" placeholder="Type something" onkeyup="updateMessage()">
+    <h3 id="liveText"></h3>
+    <div id="do"></div>
+  </div>
+
+  
+  <!-- Dynamic Name Selection -->
+  <div class="card">
+    <h2>📝 Dynamic Name Selection</h2>
+    <button onclick="updateName(event)">Chandra</button>
+    <button onclick="updateName(event)">Kathir</button>
+    <button onclick="updateName(event)">Sanjay</button>
+    <h3 id="ji">Name</h3>
+  </div>
+
+  <!-- Remove text by clicking -->
+  <div class="card">
+    <h2>❌ Remove by Click</h2>
+    <h3 onclick="removeItem(event)">One</h3>
+    <h3 onclick="removeItem(event)">Two</h3>
+    <h3 onclick="removeItem(event)">Three</h3>
+    <h3 onclick="removeItem(event)">Four</h3>
+    <h3 onclick="removeItem(event)">Five</h3>
+  </div>
+
+  <!-- Todo List -->
+  <div class="card">
+    <h2>✅ To-Do List</h2>
+    <input id="todoInput" placeholder="Enter task">
+    <button onclick="addTodo()">Add</button>
+    <ul id="todoList">
+      <li>Hello <button onclick="deleteTodo(event)">Delete</button></li>
+    </ul>
+  </div>
+
+
+<script>
+  // Guess the number
+  let randomNumber = Math.floor(Math.random() * 10) + 1;
+  let score = 10;
+
+  function checkGuess() {
+    let guess = parseInt(document.getElementById("guessInput").value);
+    let resultText = document.getElementById("resultText");
+    let scoreText = document.getElementById("scoreText");
+
+    if (guess === randomNumber) {
+      resultText.textContent = "🎉 Correct! You won!";
+      alert("You won the game!");
+    } else {
+      resultText.textContent = "❌ Wrong! Try again.";
+      score--;
+      scoreText.textContent = "Score: " + score;
+    }
+  }
+
+  // Multi-color box
+  const colors = ["#ff6b6b", "#4ecdc4", "#ffe66d", "#1a535c", "#ff9f1c"];
+  let index = 0;
+
+  function changeColor() {
+    const box = document.getElementById("colorBox");
+    index = (index + 1) % colors.length;
+    box.style.background = colors[index];
+    box.style.width = (150 + index * 20) + "px";
+    box.style.height = (150 + index * 20) + "px";
+  }
+
+  // Live message
+  function updateMessage() {
+    let message = document.getElementById("messageInput").value;
+    document.getElementById("liveText").textContent = message;
+
+    let newMsg = document.createElement("p");
+    newMsg.textContent = "You typed: " + message;
+    document.getElementById("do").append(newMsg);
+  }
+
+  }
+
+  // Dynamic Name Selection
+  function updateName(event) {
+    document.getElementById("ji").textContent = event.target.textContent;
+  }
+
+  // Remove item by clicking
+  function removeItem(event) {
+    event.target.remove();
+  }
+
+  // To-Do List
+  function addTodo() {
+    let input = document.getElementById("todoInput");
+    let list = document.getElementById("todoList");
+
+    if (input.value.trim() !== "") {
+      let li = document.createElement("li");
+      li.innerHTML = input.value + " <button onclick='deleteTodo(event)'>Delete</button>";
+      list.append(li);
+    }
+    input.value = "";
+  }
+
+  function deleteTodo(event) {
+    event.target.parentElement.remove();
+  }
+</script>
+
+</body>
+</html>
